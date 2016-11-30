@@ -1,11 +1,12 @@
 version: '2.1'
 services:
-  ubuntu1604-dev:
+  ubuntu1604-rvm:
     extends:
       file: ./base.yml
       service: base
     build:
       context: .
+      dockerfile: Dockerfile-rvm
     volumes:
       - ./:/mnt/host
     tty: true

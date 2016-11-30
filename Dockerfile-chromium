@@ -1,0 +1,4 @@
+FROM ubuntu:16.04
+RUN apt-get update --fix-missing && apt-get -y install chromium-browser
+ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+RUN useradd scott

@@ -1,0 +1,7 @@
+FROM ubuntu:16.04
+RUN apt-get update --fix-missing && apt-get -y install build-essential curl wget git vim nano python python-dev python-pip iputils-ping ssmtp smokeping
+ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+RUN a2enmod cgid
+RUN mkdir -p /var/run/smokeping
+ENTRYPOINT service apache2 start && smokeping && bash
+RUN useradd scott

@@ -1,0 +1,3 @@
+FROM ubuntu:14.04
+RUN apt-get update --fix-missing && apt-get -y install build-essential curl wget git vim nano python python-dev python-pip cron screen rsyslog sshuttle pptpd iputils-ping
+ENTRYPOINT service rsyslog start && service cron start && bash

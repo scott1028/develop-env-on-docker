@@ -1,0 +1,10 @@
+version: '2.1'
+services:
+  node:
+    image: 'ubuntu:16.04'
+    tty: true
+  lb:
+    image: 'ubuntu:16.04'
+    tty: true
+
+# Version: 2.1 has reverse dns 127.0.0.11, Can be search by service name even if you scale it.

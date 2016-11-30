@@ -1,0 +1,12 @@
+FROM ubuntu:16.04
+RUN apt-get update --fix-missing && apt-get -y install build-essential curl wget git vim nano python python-dev python-pip virtualenv cron screen rsyslog iputils-ping
+RUN curl -L git.io/nodebrew | perl - setup
+RUN echo "export PATH=\$HOME/.nodebrew/current/bin:\$PATH" >> ~/.bashrc
+RUN useradd scott
+RUN /root/.nodebrew/current/bin/nodebrew install v6.9.1
+RUN /root/.nodebrew/current/bin/nodebrew use v6.9.1
+RUN ["/bin/bash", "-c", "export PATH=$HOME/.nodebrew/current/bin:$PATH && nodebrew use v6.9.1 && npm install -gd crontab-ui"]
+RUN ["/bin/bash", "-c", "touch /tmp/empty && crontab /tmp/empty"]
+
+# Move to docker-compose file, due to the mount host path support.
+# ENTRYPOINT ["/bin/bash", "-c", "export PATH=$HOME/.nodebrew/current/bin:$PATH && service rsyslog start && service cron start && crontab-ui"]

@@ -1,0 +1,20 @@
+version: '2.1'
+services:
+  ubuntu1604-firefox:
+    extends:
+      file: ./base.yml
+      service: base
+    build:
+      context: .
+      dockerfile: Dockerfile-firefox
+    volumes:
+      - ./:/mnt/host
+      - ~/.Xauthority:/root/.Xauthority
+    tty: true
+    ports:
+      - "${HPORT:-6000}:6000"
+    environment:
+      - MYNAME=scott
+      - DISPLAY=$DISPLAY
+    network_mode: "host"
+    entrypoint: /usr/bin/firefox --private-window

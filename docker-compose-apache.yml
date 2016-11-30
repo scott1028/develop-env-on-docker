@@ -1,0 +1,17 @@
+version: '2.1'
+services:
+  ubuntu1604-apache:
+    extends:
+      file: ./base.yml
+      service: base
+    build:
+      context: .
+      dockerfile: Dockerfile-apache
+    volumes:
+      - ./:/mnt/host
+      - ./README.md:/root/README.md
+    tty: true
+    ports:
+      - "${HPORT:-80}:80"
+    entrypoint: |
+      /bin/sh -c "echo `ip route show 0.0.0.0/0 | grep -Eo 'via \S+' | awk '{ print $$2 }'`  dockerhost >> /etc/hosts; cp -rf /etc/apache2 /mnt/host && rm -rf /etc/apache2 && chmod -R 777 /mnt/host/apache2 && ln -sf /mnt/host/apache2 /etc/apache2; service rsyslog start; service cron start; service apache2 start; /bin/bash"

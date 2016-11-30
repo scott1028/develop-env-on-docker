@@ -1,0 +1,4 @@
+FROM ubuntu:16.04
+RUN apt-get update --fix-missing && apt-get -y install build-essential curl wget git vim nano cron screen rsyslog iputils-ping apache2 libssl-dev openssl
+RUN a2enmod ssl proxy_http rewrite
+RUN useradd scott

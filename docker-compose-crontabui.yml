@@ -1,0 +1,18 @@
+version: '2.1'
+services:
+  ubuntu1604-crontabui:
+    extends:
+      file: ./base.yml
+      service: base
+    build:
+      context: .
+      dockerfile: Dockerfile-crontabui
+    volumes:
+      - ./:/mnt/host
+    tty: true
+    ports:
+      - "${HPORT:-8000}:8000"
+    environment:
+      - MYNAME=scott
+    entrypoint: /bin/bash -c "export PATH=root/.nodebrew/current/bin:$PATH && service rsyslog start && service cron start && ls -al /mnt/host && HOST=0.0.0.0 PORT=8000 crontab-ui"
+    # To load file example: crontab /mnt/host/crontab.conf

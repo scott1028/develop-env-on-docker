@@ -1,13 +1,15 @@
 version: '2.1'
 services:
-  ubuntu1604-dev:
+  ubuntu1404-pptpd:
     extends:
       file: ./base.yml
       service: base
+    privileged: true
     build:
       context: .
+      dockerfile: Dockerfile-pptpd
     volumes:
       - ./:/mnt/host
     tty: true
     ports:
-      - "${HPORT:-3000}:${CPORT:-3000}"
+      - "1723:1723"

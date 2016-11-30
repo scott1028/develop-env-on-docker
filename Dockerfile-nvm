@@ -1,0 +1,4 @@
+FROM ubuntu:16.04
+RUN apt-get update --fix-missing && apt-get -y install build-essential curl wget git vim nano python iputils-ping
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+RUN useradd scott

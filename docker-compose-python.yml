@@ -1,13 +1,14 @@
 version: '2.1'
 services:
-  ubuntu1604-dev:
+  ubuntu1604-python:
     extends:
       file: ./base.yml
       service: base
     build:
       context: .
+      dockerfile: Dockerfile-python
     volumes:
       - ./:/mnt/host
     tty: true
     ports:
-      - "${HPORT:-3000}:${CPORT:-3000}"
+      - "${HPORT:-8080}:${CPORT:-8080}"

@@ -1,0 +1,8 @@
+FROM ubuntu:16.04
+RUN apt-get update --fix-missing && apt-get -y install build-essential curl wget git vim nano python iputils-ping
+ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+RUN export DEBIAN_FRONTEND=noninteractive && \
+	apt-get -y install mysql-server-5.7 && \
+	service mysql start && \
+	mysqladmin -u root password 123456
+RUN useradd scott

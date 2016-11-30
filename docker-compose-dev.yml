@@ -1,13 +1,11 @@
 version: '2.1'
 services:
-  ubuntu1604-dev:
+  ubuntu1604-base-dev-env:
     extends:
       file: ./base.yml
       service: base
-    build:
-      context: .
+    image: scott1028/base-dev-env:latest
+    entrypoint: /bin/bash
     volumes:
       - ./:/mnt/host
     tty: true
-    ports:
-      - "${HPORT:-3000}:${CPORT:-3000}"

@@ -1,0 +1,16 @@
+version: '2.1'
+services:
+  ubuntu1604-mysql:
+    extends:
+      file: ./base.yml
+      service: base
+    build:
+      context: .
+      dockerfile: Dockerfile-mysql
+    volumes:
+      - ./:/mnt/host
+    tty: true
+    entrypoint: |
+      /bin/sh -c "rm -rf /run/mysqld; cp /etc/mysql/mysql.conf.d/mysqld.cnf /tmp/mysqld.cnf && sed 's/bind-address/#bind-address/g' /tmp/mysqld.cnf > /etc/mysql/mysql.conf.d/mysqld.cnf && service mysql start; mysql -uroot -p123456 -e \"use mysql; update user set host='%' where user='root' and host='localhost';\"; service mysql restart; /bin/bash"
+    ports:
+      - "${HPORT:-3306}:3306"

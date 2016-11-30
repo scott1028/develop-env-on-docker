@@ -1,0 +1,17 @@
+version: '2.1'
+services:
+  ubuntu1604-nginx:
+    extends:
+      file: ./base.yml
+      service: base
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    volumes:
+      - ./:/mnt/host
+      - ./README.md:/root/README.md
+    tty: true
+    ports:
+      - "${HPORT:-80}:80"
+    entrypoint: |
+      /bin/sh -c "echo `ip route show 0.0.0.0/0 | grep -Eo 'via \S+' | awk '{ print $$2 }'`  dockerhost >> /etc/hosts; cp -rf /etc/nginx /mnt/host && rm -rf /etc/nginx && chmod -R 777 /mnt/host/nginx && ln -sf /mnt/host/nginx /etc/nginx; service rsyslog start; service cron start; service nginx start; /bin/bash"
