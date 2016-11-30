@@ -1,0 +1,7 @@
+ubuntu1604:
+  build: ./
+  volumes:
+    - ./:/mnt/host
+  tty: true
+  ports:
+    - "33333:3333"
