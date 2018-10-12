@@ -213,3 +213,9 @@ TD_AGENT_CONFIG=td-agent.conf docker-compose up -d --force-recreate
       - "/etc/td-agent/host/${TD_AGENT_CONFIG}"
   ...
 ```
+
+### Docker Build Google Chrome Stable & Xvfb Builtin Image
+
+```
+docker build -f ./Dockerfile-google-chrome-stable .
+```
