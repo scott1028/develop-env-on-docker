@@ -9,8 +9,19 @@ services:
       dockerfile: Dockerfile-mysql
     volumes:
       - ./:/mnt/host
+      - db-data:/var/lib/mysql  # always keep container data store to host volume of docker
     tty: true
     entrypoint: |
-      /bin/sh -c "rm -rf /run/mysqld; cp /etc/mysql/mysql.conf.d/mysqld.cnf /tmp/mysqld.cnf && sed 's/bind-address/#bind-address/g' /tmp/mysqld.cnf > /etc/mysql/mysql.conf.d/mysqld.cnf && service mysql start; mysql -uroot -p123456 -e \"use mysql; update user set host='%' where user='root' and host='localhost';\"; service mysql restart; /bin/bash"
+      /bin/sh -c "rm -rf /run/mysqld
+      cp /etc/mysql/mysql.conf.d/mysqld.cnf /tmp/mysqld.cnf
+      sed 's/bind-address/#bind-address/g' /tmp/mysqld.cnf > /etc/mysql/mysql.conf.d/mysqld.cnf
+      service mysql start
+      mysql -uroot -p123456 -e \"use mysql; update user set host='%' where user='root' and host='localhost';\"
+      echo 'general_log=1' >> /etc/mysql/mysql.conf.d/mysqld.cnf
+      echo 'general_log_file=/var/log/mysql/mysql.log' >> /etc/mysql/mysql.conf.d/mysqld.cnf
+      service mysql restart
+      /bin/bash -c 'touch /var/log/mysql/mysql.log && tail -f /var/log/mysql/mysql.log'"
     ports:
       - "${HPORT:-3306}:3306"
+volumes:
+  db-data:  # if you want to truncate data you need to delete this volume
