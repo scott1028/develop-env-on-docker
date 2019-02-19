@@ -1,0 +1,37 @@
+version: '3.1'
+services:
+  postgres:
+    hostname: PostgreSQL
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - ./redmine_postgresql:/var/lib/postgresql/data # use mount
+    environment:
+      - POSTGRES_USER=redmine
+      - POSTGRES_PASSWORD=redmine
+    image:
+      postgres:11.2
+  redmine:
+    hostname: Redmine
+    restart: always
+    ports:
+      - 80:3000
+    volumes:
+      - redmine_config:/usr/src/redmine/config # use volume, see below define at end line
+      - ./redmime_files:/usr/src/redmine/files/files # use mount
+    environment:
+      - REDMINE_DB_POSTGRES=postgres
+      - REDMINE_DB_DATABASE=redmine
+      - REDMINE_DB_USERNAME=redmine
+      - REDMINE_DB_PASSWORD=redmine
+    links:
+      - postgres:postgres
+    image:
+      redmine:4.0.1
+volumes:
+  redmine_config: # use volume, remenber to inspect volume path and backup
+
+# Note:
+# >> volume: it will copy container file to host
+# >> mounr: it will not copy files, it's just bind
