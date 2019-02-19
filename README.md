@@ -11,6 +11,31 @@
 mkdir -p volume && PWD=`pwd` docker-compose -f docker-compose-redmine.yml up
 ```
 
+- In this compose file, Volume will be stored to custome path and easily backup.
+
+```
+root@XXXXX:/home/XXXXX/redmine-docker# docker volume inspect redmine-docker_redmine_config
+[
+    {
+        "CreatedAt": "2019-02-19T14:19:38Z",
+        "Driver": "local",
+        "Labels": {
+            "com.docker.compose.project": "redmine-docker",
+            "com.docker.compose.version": "1.23.2",
+            "com.docker.compose.volume": "redmine_config"
+        },
+        "Mountpoint": "/var/lib/docker/volumes/redmine-docker_redmine_config/_data",
+        "Name": "redmine-docker_redmine_config",
+        "Options": {
+            "device": "/home/XXXXX/redmine-docker/volume",
+            "o": "bind",
+            "type": "volume"
+        },
+        "Scope": "local"
+    }
+]
+```
+
 #### Issue shooting
 
 - If apt-get update --fix-missing cause error. Please docker images then remove old images and install again.
