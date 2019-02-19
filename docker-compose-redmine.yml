@@ -43,3 +43,7 @@ volumes:
 #
 # For Volume you can see the config default
 # >> docker volume inspect my-vol
+#
+# Variable passing
+# >> Ref: https://docs.docker.com/compose/compose-file/#variable-substitution
+# >> You can set default values for environment variables using a .env file, which Compose automatically looks for. Values set in the shell environment override those set in the .env file.
