@@ -31,7 +31,18 @@ services:
       redmine:4.0.1
 volumes:
   redmine_config: # use volume, remenber to inspect volume path and backup
+    driver: local
+    driver_opts:
+      type: volume
+      o: bind
+      device: "${PWD:-volume}/volume"
+      # mountpoint: "${PWD:-volume}/volume" # by "PWD=`pwd` docker-compose up"
+      # source: ./volume_data # specify a path for persisting data of volume
 
 # Note:
 # >> volume: it will copy container file to host
 # >> mounr: it will not copy files, it's just bind
+#
+
+# For Volume you can see the config default
+# >> docker volume inspect my-vol
