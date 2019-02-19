@@ -5,6 +5,12 @@
 - Default expose HOST=33333 to Container=3333 Port of TCP.
 - Python Docker add cronjob, rsyslog for create logfile.
 
+#### With volume to current Path sample
+
+```sh
+mkdir -p volume && PWD=`pwd` docker-compose -f docker-compose-redmine.yml up
+```
+
 #### Issue shooting
 
 - If apt-get update --fix-missing cause error. Please docker images then remove old images and install again.

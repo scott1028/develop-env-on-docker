@@ -19,7 +19,7 @@ services:
       - 80:3000
     volumes:
       - redmine_config:/usr/src/redmine/config # use volume, see below define at end line
-      - ./redmime_files:/usr/src/redmine/files/files # use mount
+      - ./redmine_files:/usr/src/redmine/files/files # use mount
     environment:
       - REDMINE_DB_POSTGRES=postgres
       - REDMINE_DB_DATABASE=redmine
@@ -35,14 +35,11 @@ volumes:
     driver_opts:
       type: volume
       o: bind
-      device: "${PWD:-volume}/volume"
-      # mountpoint: "${PWD:-volume}/volume" # by "PWD=`pwd` docker-compose up"
-      # source: ./volume_data # specify a path for persisting data of volume
+      device: "${PWD}/volume" # sync to current path with ENV Varaibles of Shell
 
 # Note:
-# >> volume: it will copy container file to host
-# >> mounr: it will not copy files, it's just bind
+# >> volume: it will copy container file to host with bind opt and device filled path
+# >> mount: it will not copy files, it's just bind
 #
-
 # For Volume you can see the config default
 # >> docker volume inspect my-vol
