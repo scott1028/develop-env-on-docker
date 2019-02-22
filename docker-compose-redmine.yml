@@ -7,6 +7,7 @@ services:
       - 5432:5432
     volumes:
       - ./redmine_postgresql:/var/lib/postgresql/data # use mount
+      - ./volume:/volume # a trick for create folder on host for redmine service
     environment:
       - POSTGRES_USER=redmine
       - POSTGRES_PASSWORD=redmine
@@ -18,8 +19,8 @@ services:
     ports:
       - 80:3000
     volumes:
-      - redmine_config:/usr/src/redmine/config # use volume, see below define at end line
       - ./redmine_files:/usr/src/redmine/files/files # use mount
+      - redmine_config:/usr/src/redmine/config # use volume, see below define at end line
     environment:
       - REDMINE_DB_POSTGRES=postgres
       - REDMINE_DB_DATABASE=redmine
@@ -35,7 +36,7 @@ volumes:
     driver_opts:
       type: volume
       o: bind
-      device: "${PWD}/volume" # sync to current path with ENV Varaibles of Shell
+      device: "${PWD:-`pwd`}/volume" # sync to current path with ENV Varaibles of Shell, with a dynamical default value
 
 # Note:
 # >> volume: it will copy container file to host with bind opt and device filled path
