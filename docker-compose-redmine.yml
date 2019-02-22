@@ -14,6 +14,8 @@ services:
     image:
       postgres:11.2
   redmine:
+    environment:
+      - CWP=${CWP:-`mkdir -p ./volume && pwd`}/volume # a trick for create volume pass to device of volume
     hostname: Redmine
     restart: always
     ports:
@@ -36,7 +38,7 @@ volumes:
     driver_opts:
       type: volume
       o: bind
-      device: "${PWD:-`pwd`}/volume" # sync to current path with ENV Varaibles of Shell, with a dynamical default value
+      device: "${PWD}/volume" # $PWD is system variable of shell of linux
 
 # Note:
 # >> volume: it will copy container file to host with bind opt and device filled path
