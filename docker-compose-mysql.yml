@@ -15,12 +15,18 @@ services:
       /bin/sh -c "rm -rf /run/mysqld
       cp /etc/mysql/mysql.conf.d/mysqld.cnf /tmp/mysqld.cnf
       sed 's/bind-address/#bind-address/g' /tmp/mysqld.cnf > /etc/mysql/mysql.conf.d/mysqld.cnf
-      service mysql start
-      mysql -uroot -p123456 -e \"use mysql; update user set host='%' where user='root' and host='localhost';\"
       echo 'general_log=1' >> /etc/mysql/mysql.conf.d/mysqld.cnf
       echo 'general_log_file=/var/log/mysql/mysql.log' >> /etc/mysql/mysql.conf.d/mysqld.cnf
-      service mysql restart
-      /bin/bash -c 'touch /var/log/mysql/mysql.log && tail -f /var/log/mysql/mysql.log'"
+      mkdir -p /var/run/mysqld
+      chown mysql:mysql /var/run/mysqld
+      nohup mysqld_safe --skip-grant-tables &
+      until [ -f /var/run/mysqld/mysqld.pid ]
+      do
+        sleep 1
+      done
+      echo \"MySQL Launched\"
+      mysql -u root --execute=\"SET global general_log = 1; SET global general_log_file='/tmp/mysql.log'; SET global log_output = 'file';\"
+      /bin/bash -c 'touch /tmp/mysql.log && tail -f /tmp/mysql.log'"
     ports:
       - "${HPORT:-3306}:3306"
 volumes:
