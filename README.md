@@ -9,6 +9,7 @@
 
 ```sh
 mkdir -p volume && PWD=`pwd` docker-compose -f docker-compose-redmine.yml up
+mkdir -p volume && PWD=`pwd` docker-compose -f docker-compose-jenkins.yml up
 ```
 
 - In this compose file, Volume will be stored to custome path and easily backup.
