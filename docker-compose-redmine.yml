@@ -19,7 +19,7 @@ services:
     hostname: Redmine
     restart: always
     ports:
-      - 80:3000
+      - "${HPORT:-8080}:3000"
     volumes:
       - ./redmine_files:/usr/src/redmine/files/files # use mount
       - redmine_config:/usr/src/redmine/config # use volume, see below define at end line
