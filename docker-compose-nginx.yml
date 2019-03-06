@@ -13,13 +13,18 @@ services:
     tty: true
     ports:
       - "${HPORT:-80}:80"
+      - "${HSPORT:-443}:443"
     entrypoint: |
       /bin/sh -c "
       echo `ip route show 0.0.0.0/0 | grep -Eo 'via \S+' | awk '{ print $$2 }'` dockerhost >> /etc/hosts
       cp -rf /etc/nginx /mnt/host
+      cp -rf /usr/share/nginx/html /mnt/host/nginx_html
       rm -rf /etc/nginx
+      rm -rf /usr/share/nginx/html
       chmod o+rwx -R /mnt/host/nginx
+      chmod o+rwx -R /mnt/host/nginx_html
       ln -sf /mnt/host/nginx /etc/nginx
+      ln -sf /mnt/host/nginx_html /usr/share/nginx/html
       service rsyslog start
       service cron start
       service nginx start
