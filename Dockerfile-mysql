@@ -5,4 +5,3 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get -y install mysql-server-5.7 && \
 	service mysql start &&\
 	mysql -u root --execute="use mysql; update user set host='%' where host='localhost' and user='root';"
-RUN useradd scott
