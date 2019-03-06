@@ -14,4 +14,13 @@ services:
     ports:
       - "${HPORT:-80}:80"
     entrypoint: |
-      /bin/sh -c "echo `ip route show 0.0.0.0/0 | grep -Eo 'via \S+' | awk '{ print $$2 }'`  dockerhost >> /etc/hosts; cp -rf /etc/nginx /mnt/host && rm -rf /etc/nginx && chmod -R 777 /mnt/host/nginx && ln -sf /mnt/host/nginx /etc/nginx; service rsyslog start; service cron start; service nginx start; /bin/bash"
+      /bin/sh -c "
+      echo `ip route show 0.0.0.0/0 | grep -Eo 'via \S+' | awk '{ print $$2 }'` dockerhost >> /etc/hosts
+      cp -rf /etc/nginx /mnt/host
+      rm -rf /etc/nginx
+      chmod o+rwx -R /mnt/host/nginx
+      ln -sf /mnt/host/nginx /etc/nginx
+      service rsyslog start
+      service cron start
+      service nginx start
+      tail -f /var/log/nginx/access.log"
