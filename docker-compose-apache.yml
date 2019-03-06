@@ -13,14 +13,21 @@ services:
     tty: true
     ports:
       - "${HPORT:-80}:80"
+      - "${HSPORT:-443}:443"
     entrypoint: |
       /bin/sh -c "
       echo `ip route show 0.0.0.0/0 | grep -Eo 'via \S+' | awk '{ print $$2 }'` dockerhost >> /etc/hosts
       cp -rf /etc/apache2 /mnt/host
+      cp -rf /var/www/html /mnt/host/apache2_html
       rm -rf /etc/apache2
+      rm -rf /var/www/html
       chmod o+rwx -R /mnt/host/apache2
+      chmod o+rwx -R /mnt/host/apache2_html
       ln -sf /mnt/host/apache2 /etc/apache2
+      ln -sf /mnt/host/apache2_html /var/www/html
       service rsyslog start
       service cron start
+      a2enmod ssl proxy_http rewrite
+      a2ensite default-ssl
       service apache2 start
       tail -f /var/log/apache2/access.log"
