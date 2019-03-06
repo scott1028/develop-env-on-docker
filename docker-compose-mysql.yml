@@ -11,6 +11,8 @@ services:
       - ./:/mnt/host
       - db-data:/var/lib/mysql  # always keep container data store to host volume of docker
     tty: true
+    environment:
+      - CWP=${CWP:-`mkdir -p ./mysql_data && pwd`}/mysql_data # a trick for create volume pass to device of volume
     entrypoint: |
       /bin/sh -c "rm -rf /run/mysqld
       cp /etc/mysql/mysql.conf.d/mysqld.cnf /tmp/mysqld.cnf
@@ -30,4 +32,9 @@ services:
     ports:
       - "${HPORT:-3306}:3306"
 volumes:
-  db-data:  # if you want to truncate data you need to delete this volume
+  db-data: # use volume, remenber to inspect volume path and backup
+    driver: local
+    driver_opts:
+      type: volume
+      o: bind
+      device: "${PWD:-/tmp}/mysql_data" # $PWD is system variable of shell of linux

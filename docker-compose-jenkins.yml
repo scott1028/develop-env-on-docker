@@ -15,4 +15,4 @@ volumes:
     driver_opts:
       type: volume
       o: bind
-      device: "${PWD:-/tmp}/volume" # $PWD is system variable of shell of linux
+      device: "${PWD:-/tmp}/jenkins_home" # $PWD is system variable of shell of linux

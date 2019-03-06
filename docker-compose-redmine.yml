@@ -7,7 +7,6 @@ services:
       - 5432:5432
     volumes:
       - ./redmine_postgresql:/var/lib/postgresql/data # use mount
-      - ./volume:/volume # a trick for create folder on host for redmine service
     environment:
       - POSTGRES_USER=redmine
       - POSTGRES_PASSWORD=redmine
@@ -15,7 +14,7 @@ services:
       postgres:11.2
   redmine:
     environment:
-      - CWP=${CWP:-`mkdir -p ./volume && pwd`}/volume # a trick for create volume pass to device of volume
+      - CWP=${CWP:-`mkdir -p ./redmine_config && pwd`}/redmine_config # a trick for create volume pass to device of volume
     hostname: Redmine
     restart: always
     ports:
@@ -38,7 +37,7 @@ volumes:
     driver_opts:
       type: volume
       o: bind
-      device: "${PWD:-/tmp}/volume" # $PWD is system variable of shell of linux
+      device: "${PWD:-/tmp}/redmine_config" # $PWD is system variable of shell of linux
 
 # Note:
 # >> volume: it will copy container file to host with bind opt and device filled path

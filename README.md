@@ -8,8 +8,9 @@
 #### With volume to current Path sample
 
 ```sh
-$ mkdir -p volume && PWD=`pwd` docker-compose -f docker-compose-redmine.yml up
-$ mkdir -p volume && PWD=`pwd` docker-compose -f docker-compose-jenkins.yml up
+mkdir -p mysql_data && PWD=`pwd` docker-compose -f docker-compose-mysql.yml up
+mkdir -p redmine_config && PWD=`pwd` docker-compose -f docker-compose-redmine.yml up
+mkdir -p jenkins_home && PWD=`pwd` docker-compose -f docker-compose-jenkins.yml up
 ```
 
 - In this compose file, Volume will be stored to custome path and easily backup.
