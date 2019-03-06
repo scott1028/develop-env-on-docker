@@ -11,10 +11,9 @@ services:
       - ./:/mnt/host
       - db-data:/var/lib/mysql  # always keep container data store to host volume of docker
     tty: true
-    environment:
-      - CWP=${CWP:-`mkdir -p ./mysql_data && pwd`}/mysql_data # a trick for create volume pass to device of volume
     entrypoint: | # use a trick chown 1000 to set permission approval to first normal user of system
       /bin/sh -c "rm -rf /run/mysqld
+      echo ${HUID}
       cp /etc/mysql/mysql.conf.d/mysqld.cnf /tmp/mysqld.cnf
       sed 's/bind-address/#bind-address/g' /tmp/mysqld.cnf > /etc/mysql/mysql.conf.d/mysqld.cnf
       echo 'general_log=1' >> /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -27,7 +26,7 @@ services:
         sleep 1
       done
       echo \"MySQL Launched\"
-      chown 1000 /var/lib/mysql
+      chmod o+rwx -R /var/lib/mysql
       mysql -u root --execute=\"SET global general_log = 1; SET global general_log_file='/tmp/mysql.log'; SET global log_output = 'file';\"
       /bin/bash -c 'touch /tmp/mysql.log && tail -f /tmp/mysql.log'"
     ports:

@@ -13,8 +13,6 @@ services:
     image:
       postgres:11.2
   redmine:
-    environment:
-      - CWP=${CWP:-`mkdir -p ./redmine_config && pwd`}/redmine_config # a trick for create volume pass to device of volume
     hostname: Redmine
     restart: always
     ports:
