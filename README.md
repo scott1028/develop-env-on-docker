@@ -12,6 +12,7 @@
 mkdir -p mysql_data && PWD=`pwd` docker-compose -f docker-compose-mysql.yml up
 mkdir -p redmine_config && PWD=`pwd` docker-compose -f docker-compose-redmine.yml up
 mkdir -p jenkins_home && PWD=`pwd` docker-compose -f docker-compose-jenkins.yml up
+mkdir -p elasticsearch_home && PWD=`pwd` docker-compose -f docker-compose-elasticsearch.yml up
 ```
 
 ```sh
@@ -19,6 +20,17 @@ mkdir -p jenkins_home && PWD=`pwd` docker-compose -f docker-compose-jenkins.yml 
 mkdir -p mysql_data && PWD=`pwd` docker-compose -f docker-compose-mysql.yml down --rmi all -v
 mkdir -p redmine_config && PWD=`pwd` docker-compose -f docker-compose-redmine.yml down --rmi all -v
 mkdir -p jenkins_home && PWD=`pwd` docker-compose -f docker-compose-jenkins.yml down --rmi all -v
+```
+
+#### For Elasticsearch Docker Image(Only Server without GUI)
+
+- You can use GUI provided by chrome extension `ElasticHQ
+`
+- Mirage GUI Tool, `https://github.com/appbaseio/mirage`
+- max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+
+```
+sudo sysctl -w vm.max_map_count=262144
 ```
 
 - In this compose file, Volume will be stored to custome path and easily backup.

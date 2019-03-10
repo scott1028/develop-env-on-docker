@@ -1,0 +1,23 @@
+version: '2.1'
+services:
+  elasticsearch:
+    image: 'library/elasticsearch:6.6.1'
+    container_name: elasticsearch
+    restart: always
+    volumes:
+      - elasticsearch_home:/usr/share/elasticsearch
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    entrypoint: |
+      /bin/sh -c "
+      chmod o+rwx -R /usr/share/elasticsearch
+      /usr/local/bin/docker-entrypoint.sh
+      "
+volumes:
+  elasticsearch_home: # use volume, remenber to inspect volume path and backup
+    driver: local
+    driver_opts:
+      type: volume
+      o: bind
+      device: "${PWD:-/tmp}/elasticsearch_home" # $PWD is system variable of shell of linux
