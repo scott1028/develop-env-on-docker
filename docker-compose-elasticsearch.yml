@@ -9,9 +9,18 @@ services:
     ports:
       - '9200:9200'
       - '9300:9300'
+      - '5000:5000'
     entrypoint: |
       /bin/sh -c "
+      yum install -y centos-release-scl
+      yum install -y rh-python36
+      yum install -y git
+      export PATH="/opt/rh/rh-python36/root/usr/bin:$PATH"
+      rm -rf elasticsearch-HQ
+      git clone https://github.com/ElasticHQ/elasticsearch-HQ.git
       chmod o+rwx -R /usr/share/elasticsearch
+      cd elasticsearch-HQ && pip install -r requirements.txt
+      python application.py &
       /usr/local/bin/docker-entrypoint.sh
       "
 volumes:
