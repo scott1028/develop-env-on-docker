@@ -4,11 +4,17 @@ services:
     image: 'jenkins/jenkins:lts'
     container_name: jenkins
     restart: always
+    user: root
     volumes:
       - jenkins_home:/var/jenkins_home
     ports:
       - '8080:8080'
       - '50000:50000'
+    entrypoint: |
+      /bin/sh -c "
+      chmod o+rwx -R /var/jenkins_home
+      /usr/local/bin/jenkins.sh
+      "
 volumes:
   jenkins_home: # use volume, remenber to inspect volume path and backup
     driver: local
