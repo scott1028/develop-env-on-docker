@@ -25,7 +25,7 @@ services:
         sleep 1
       done
       echo \"MySQL Launched\"
-      chmod o+rwx -R /var/lib/mysql
+      chmod ugo+rwx -R /var/lib/mysql
       mysql -u root --execute=\"SET global general_log = 1; SET global general_log_file='/tmp/mysql.log'; SET global log_output = 'file';\"
       /bin/bash -c 'touch /tmp/mysql.log && tail -f /tmp/mysql.log'"
     ports:
