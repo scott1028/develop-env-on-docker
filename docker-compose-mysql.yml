@@ -13,7 +13,6 @@ services:
     tty: true
     entrypoint: | # use a trick chown 1000 to set permission approval to first normal user of system
       /bin/sh -c "rm -rf /run/mysqld
-      echo ${HUID}
       cp /etc/mysql/mysql.conf.d/mysqld.cnf /tmp/mysqld.cnf
       sed 's/bind-address/#bind-address/g' /tmp/mysqld.cnf > /etc/mysql/mysql.conf.d/mysqld.cnf
       echo 'general_log=1' >> /etc/mysql/mysql.conf.d/mysqld.cnf
