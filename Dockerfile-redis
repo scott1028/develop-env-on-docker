@@ -1,0 +1,4 @@
+FROM ubuntu:16.04
+RUN apt-get update --fix-missing && apt-get -y install build-essential curl wget git vim nano rsyslog redis-server
+RUN useradd scott
+ENTRYPOINT service rsyslog start && update-rc.d redis-server defaults && service redis-server start && bash

@@ -87,6 +87,7 @@ ubuntu1604nvmdev:
 
 ```
 $ HPORT=3333 docker-compose -f docker-compose-nginx.yml up -d
+$ HPORT=6379 docker-compose -f docker-compose-redis.yml up -d
 ```
 
 - Windows

@@ -1,0 +1,14 @@
+version: '2.1'
+services:
+  ubuntu1604-redis:
+    extends:
+      file: ./base.yml
+      service: base
+    build:
+      context: .
+      dockerfile: Dockerfile-redis
+    volumes:
+      - ./:/mnt/host
+    tty: true
+    ports:
+      - "${HPORT:-6379}:${CPORT:-6379}"
