@@ -113,6 +113,7 @@ docker-compose build
 
 ```
 HPORT=33333 CPORT=3333 docker-compose up -d
+HPORT=33333 CPORT=3333 docker-compose up --rm  # remove itself when exits
 	...
 HPORT=33333 CPORT=3333 docker-compose up -d --build  # when update docker-compose.yml config
 ```
