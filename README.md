@@ -116,6 +116,9 @@ HPORT=33333 CPORT=3333 docker-compose up -d
 
 # https://github.com/docker/compose/tree/v2#where-to-get-docker-compose
 HPORT=33333 CPORT=3333 docker compose run --rm $oneOfServiceNameOfYaml /usr/bin/bash  # remove itself when exits
+
+# Without override entrypoint command(`docker-compose run --rm` ~= `docker compose run --rm`)
+docker-compose run --rm $oneOfServiceNameOfYaml
 	...
 HPORT=33333 CPORT=3333 docker-compose up -d --build  # when update docker-compose.yml config
 ```
