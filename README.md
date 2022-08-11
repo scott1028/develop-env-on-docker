@@ -117,6 +117,9 @@ HPORT=33333 CPORT=3333 docker-compose up -d
 # https://github.com/docker/compose/tree/v2#where-to-get-docker-compose
 HPORT=33333 CPORT=3333 docker compose run --rm $oneOfServiceNameOfYaml /usr/bin/bash  # remove itself when exits
 
+# If execute `run`, you will need to specify `port`.
+HPORT=33333 CPORT=3333 docker compose run --rm -p 8080:8080 $oneOfServiceNameOfYaml /usr/bin/bash
+
 # Without override entrypoint command(`docker-compose run --rm` ~= `docker compose run --rm`)
 docker-compose run --rm $oneOfServiceNameOfYaml
 	...
